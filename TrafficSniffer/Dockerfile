@@ -10,7 +10,15 @@ RUN a2enmod rewrite
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
     # apk add --update --no-cache tar apache mysql mysql-client bash
     apt update && \
-    apt install -y default-mysql-client default-mysql-server curl tcpdump
+    apt install -y default-mysql-client default-mysql-server curl tcpdump openssh-server
+
+# Create a low-privilege user with a weak password
+RUN useradd -ms /bin/bash helloctf && \
+    echo "helloctf:123456" | chpasswd && \
+    usermod -aG sudo helloctf
+
+# Set up SSH
+RUN mkdir /var/run/sshd
 
 # 配置mysql
 RUN docker-php-source extract && \
@@ -27,7 +35,9 @@ COPY ./config/docker-php-ext-pdo_mysql.ini /usr/local/etc/php/conf.d
 
 # 复制web项目源码
 COPY src /var/www/html
+COPY flag /var/www/html
 
+COPY flag /
 # 重新设置源码路径的用户所有权
 RUN chown -R www-data:www-data /var/www/html
 

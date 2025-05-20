@@ -33,6 +33,7 @@
 <body>
     <div class="container">
         <h1>MySQL 流量模拟</h1>
+        <p>使用 tcpdump -i any port 3306 -w mysql.pcap 捕获并且保存流量</p>
         <?php
             // 数据库连接信息
             $servername = "127.0.0.1";

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+service ssh start
+
+sql_flag="flag{U_Ins3rt_&_I_c4tch_U}"
+
 rm -f /docker-entrypoint.sh
 
 mysqld_safe &
@@ -14,18 +18,6 @@ do
 	sleep 3
 done
 
-# Check the environment variables for the flag and assign to INSERT_FLAG
-if [ "$DASFLAG" ]; then
-    INSERT_FLAG="$DASFLAG"
-elif [ "$FLAG" ]; then
-    INSERT_FLAG="$FLAG"
-elif [ "$GZCTF_FLAG" ]; then
-    INSERT_FLAG="$GZCTF_FLAG"
-else
-    INSERT_FLAG="flag{TEST_Dynamic_FLAG}"
-fi
-
-echo "Run:insert into flag values('flag','$INSERT_FLAG');"
 
 # 将FLAG写入文件 请根据需要修改
 # echo $INSERT_FLAG | tee /home/$user/flag /flag
@@ -43,11 +35,9 @@ fi
 mysql -u root -p123456 -e "
 USE ctf;
 create table $FLAG_TABLE (id varchar(300),data varchar(300));
-insert into $FLAG_TABLE values('$FLAG_COLUMN','$INSERT_FLAG');
+insert into $FLAG_TABLE values('$FLAG_COLUMN','$sql_flag');
 "
 
-# 写入FLAG到根目录
-echo $INSERT_FLAG > /flag
 
 source /etc/apache2/envvars
 
