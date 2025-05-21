@@ -23,4 +23,6 @@ https://github.com/raddyfiy/caidao-official-version
 
 [Behinder_v4.1【t00ls专版】](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v4.1%E3%80%90t00ls%E4%B8%93%E7%89%88%E3%80%91)
 
+反编译源码：[MountCloud/BehinderClientSource](https://github.com/MountCloud/BehinderClientSource)  
+
 >  其他发行版本：[Behinder_v3.0.11【t00ls专版】](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v3.0_Beta_11_for_tools) | [冰蝎 v2.0.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v2.0.1) | [冰蝎v1.2.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v1.2.1)

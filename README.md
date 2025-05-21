@@ -49,6 +49,28 @@ Tshark
 
 
 
+### 开源脚本
+
+[5ime / CS_Decrypt](https://github.com/5ime/CS_Decrypt)
+
+> CobaltStrike流量解密脚本
+
+[P001water / UsbKbCracker](https://github.com/P001water/UsbKbCracker)
+
+> CTF中常见键盘流量解密脚本
+
+[melody27 / behinder_decrypt](https://github.com/melody27/behinder_decrypt)
+
+> 冰蝎流量解密脚本
+
+[Mumuzi7179 / UsbKeyboard_Mouse_Hacker_Gui](https://github.com/Mumuzi7179/UsbKeyboard_Mouse_Hacker_Gui)
+
+> 自带GUI的一键解鼠标流量/键盘流量小工具
+
+[WangYihang / UsbKeyboardDataHacker](https://github.com/WangYihang/UsbKeyboardDataHacker)
+
+> USB键盘流量包取证工具 , 用于恢复用户的击键信息
+
 ### 辅助工具
 
 一些可能会用到的流量分析相关软件：
@@ -64,3 +86,31 @@ Tshark
 **[PotatoTool](https://github.com/HotBoy-java/PotatoTool)**
 
 > 网络安全综合工具
+
+### Webshell相关
+
+**中国菜刀** - https://github.com/raddyfiy/caidao-official-version
+
+**蚁剑流量分析**  - [releases-2.1.15](https://github.com/AntSwordProject/antSword/releases/tag/2.1.15) 
+
+**哥斯拉流量** - [v4.0.1-godzilla](https://github.com/BeichenDream/Godzilla/releases/tag/v4.0.1-godzilla)
+
+**冰蝎**
+
+主要以最新Release为主，其他版本流量特征会有变更，有兴趣可依靠靶场环境自行研究。
+
+[Behinder_v4.1【t00ls专版】](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v4.1%E3%80%90t00ls%E4%B8%93%E7%89%88%E3%80%91)
+
+反编译源码：[MountCloud/BehinderClientSource](https://github.com/MountCloud/BehinderClientSource)  
+
+>  其他发行版本：[Behinder_v3.0.11【t00ls专版】](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v3.0_Beta_11_for_tools) | [冰蝎 v2.0.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v2.0.1) | [冰蝎v1.2.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v1.2.1)
+
+### Q & A
+
+**历史上的流量分析赛题很多了 为什么要有这个项目？**
+
+：事实证明拿历史赛题来给新手讲流量分析是不可行的 
+
+“老师为什么他下载下来的文件还要解这么多层加密啊，webshell这么厉害么”
+
+ “傻孩子，这不是webshell干的，这他妈是出题人的脑花!🧠”
