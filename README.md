@@ -55,13 +55,29 @@ Tshark
 
 > CobaltStrike流量解密脚本
 
-[P001water / UsbKbCracker](https://github.com/P001water/UsbKbCracker)
-
-> CTF中常见键盘流量解密脚本
-
 [melody27 / behinder_decrypt](https://github.com/melody27/behinder_decrypt)
 
 > 冰蝎流量解密脚本
+
+[godzilla_decode](https://github.com/AlphabugX/godzilla_decode)
+
+> 哥斯拉jsp(内存马)流量解密
+
+[Deco_Godzilla](https://github.com/nocultrue/Deco_Godzilla)
+
+> 解密哥斯拉所有类型流量
+
+[kingkong](https://github.com/H4ckForJob/kingkong)
+
+> 哥斯拉jsp类型的webshell流量解密
+
+[godzilla_decoder](https://github.com/think3t/godzilla_decoder)
+
+> **[哥斯拉Godzilla](https://github.com/BeichenDream/Godzilla)** 加密流量分析的辅助脚本
+
+[P001water / UsbKbCracker](https://github.com/P001water/UsbKbCracker)
+
+> CTF中常见键盘流量解密脚本
 
 [Mumuzi7179 / UsbKeyboard_Mouse_Hacker_Gui](https://github.com/Mumuzi7179/UsbKeyboard_Mouse_Hacker_Gui)
 
@@ -89,6 +105,8 @@ Tshark
 
 ### Webshell相关
 
+#### webshell
+
 **中国菜刀** - https://github.com/raddyfiy/caidao-official-version
 
 **蚁剑流量分析**  - [releases-2.1.15](https://github.com/AntSwordProject/antSword/releases/tag/2.1.15) 
@@ -104,6 +122,10 @@ Tshark
 反编译源码：[MountCloud/BehinderClientSource](https://github.com/MountCloud/BehinderClientSource)  
 
 >  其他发行版本：[Behinder_v3.0.11【t00ls专版】](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v3.0_Beta_11_for_tools) | [冰蝎 v2.0.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v2.0.1) | [冰蝎v1.2.1](https://github.com/rebeyond/Behinder/releases/tag/Behinder_v1.2.1)
+
+#### 分析文章
+
+[【freebuf - 2021-08-22 - 哥斯拉Godzilla加密流量分析<3.03>】](https://www.freebuf.com/sectool/285693.html)
 
 ### Q & A
 
