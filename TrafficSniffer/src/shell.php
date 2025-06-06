@@ -143,7 +143,39 @@
                     复制URL
                 </button>
             </div>
+
+            <div class="shell-card bg-white rounded-xl shadow-lg p-4 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+                <div>
+                    <h2 class="text-lg font-semibold text-blue-600 mb-3">哥斯拉 (Godzilla) - EVAL_BASE64</h2>
+                    <div class="text-xs text-gray-600 mb-1">
+                        <span class="font-medium text-gray-700">密码:</span>
+                        <span class="ml-1">pass</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mb-1">
+                        <span class="font-medium text-gray-700">密钥:</span>
+                        <span class="ml-1">key</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mb-1">
+                        <span class="font-medium text-gray-700">加载器:</span>
+                        <span class="ml-1">PHP_EVAL_XOR_BASE64</span>
+                    </div>
+                    <div class="text-xs text-gray-600 mb-3 flex items-start">
+                        <span class="font-medium text-gray-700 mr-1 whitespace-nowrap">URL:</span>
+                        <span class="truncate" title="<?php echo htmlspecialchars($baseUrl . '/godzilla_3.php'); ?>" data-url="<?php echo htmlspecialchars($baseUrl . '/godzilla_3.php'); ?>">
+                            <?php echo htmlspecialchars($baseUrl . '/godzilla_3.php'); ?>
+                        </span>
+                    </div>
+                </div>
+                <button class="copy-url-btn mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-300 text-sm copy-button">
+                    复制URL
+                </button>
+            </div>
         </div>
+
+        </div>
+
+        
+
     </div>
 
     <footer class="text-center text-gray-500 mt-12 pb-6">
