@@ -1,48 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*, java.util.*, javax.servlet.http.Part, java.net.URLEncoder, java.nio.file.Files, java.nio.file.Paths" %>
 <%!
-    // 用于显示消息的变量
     String message = "";
-    String messageType = "info"; // 可以是 'info', 'success', 'error'
+    String messageType = "info";
 
-    // 简单的JavaScript字符串转义
     private String escapeJavaScript(String text) {
         return text.replace("\\", "\\\\").replace("'", "\\'").replace("\n", "\\n").replace("\r", "\\r");
     }
 %>
 <%
-    // 获取当前目录的绝对路径
     String currentPath = application.getRealPath("/");
-    // 获取请求中的'path'参数，如果存在则更新当前路径
     String reqPath = request.getParameter("path");
     if (reqPath != null && !reqPath.trim().isEmpty()) {
         File requestedFile = new File(currentPath, reqPath);
         if (requestedFile.exists() && requestedFile.isDirectory()) {
             currentPath = requestedFile.getAbsolutePath();
         } else {
-            // 如果请求的路径无效或不是目录，则回退到根目录或显示错误
             message = "错误: 请求的路径无效或不是目录。";
             messageType = "error";
         }
     }
 
-    // 确保路径以文件分隔符结尾，以便正确处理子目录
     if (!currentPath.endsWith(File.separator)) {
         currentPath += File.separator;
     }
 
-    // 处理文件操作
     String action = request.getParameter("action");
-    String target = request.getParameter("target"); // 目标文件或目录
+    String target = request.getParameter("target");
 
     if ("upload".equals(action)) {
         try {
-            // 确保请求是multipart/form-data
             if (request.getContentType() != null && request.getContentType().startsWith("multipart/form-data")) {
                 for (Part part : request.getParts()) {
                     String fileName = part.getSubmittedFileName();
                     if (fileName != null && !fileName.isEmpty()) {
-                        // 防止路径遍历攻击
                         fileName = new File(fileName).getName();
                         String filePath = currentPath + fileName;
                         part.write(filePath);
@@ -58,42 +49,8 @@
             message = "文件上传失败: " + e.getMessage();
             messageType = "error";
         }
-    } else if ("delete".equals(action) && target != null) {
-        // target现在是URL编码的相对路径，需要先解码
-        String decodedTarget = java.net.URLDecoder.decode(target, "UTF-8");
-        // 使用应用程序根路径和解码后的相对路径构建File对象
-        File fileToDelete = new File(application.getRealPath("/"), decodedTarget);
-
-        try {
-            if (fileToDelete.exists()) {
-                if (fileToDelete.isDirectory()) {
-                    // 递归删除目录
-                    Files.walk(fileToDelete.toPath())
-                           .sorted(Comparator.reverseOrder())
-                           .map(java.nio.file.Path::toFile)
-                           .forEach(File::delete);
-                    message = "目录 '" + decodedTarget + "' 及其内容已删除。";
-                    messageType = "success";
-                } else {
-                    if (fileToDelete.delete()) {
-                        message = "文件 '" + decodedTarget + "' 已删除。";
-                        messageType = "success";
-                    } else {
-                        message = "文件 '" + decodedTarget + "' 删除失败。";
-                        messageType = "error";
-                    }
-                }
-            } else {
-                message = "错误: 文件或目录 '" + decodedTarget + "' 不存在。";
-                messageType = "error";
-            }
-        } catch (Exception e) {
-            message = "删除失败: " + e.getMessage();
-            messageType = "error";
-        }
     } else if ("save".equals(action) && target != null) {
         String fileContent = request.getParameter("fileContent");
-        // 防止路径遍历攻击
         File fileToSave = new File(currentPath, new File(target).getName());
         try (FileOutputStream fos = new FileOutputStream(fileToSave);
              OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
@@ -107,16 +64,14 @@
         }
     }
 
-    // 获取当前目录的文件列表
     File currentDirFile = new File(currentPath);
     File[] files = currentDirFile.listFiles();
     if (files == null) {
-        files = new File[0]; // 如果目录不存在或无法访问，则返回空数组
+        files = new File[0];
         message = "错误: 无法访问目录 " + currentPath;
         messageType = "error";
     }
 
-    // 对文件进行排序，目录在前，文件在后，然后按名称排序
     Arrays.sort(files, (f1, f2) -> {
         if (f1.isDirectory() && !f2.isDirectory()) return -1;
         if (!f1.isDirectory() && f2.isDirectory()) return 1;
@@ -165,13 +120,13 @@
             margin-bottom: 20px;
             font-size: 0.9em;
             color: #555;
-            word-wrap: break-word; /* 允许长路径换行 */
-            overflow-wrap: break-word; /* 兼容性 */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 8px; /* 行间距 */
+            border-spacing: 0 8px;
             margin-top: 20px;
         }
         th, td {
@@ -211,17 +166,11 @@
             text-decoration: none;
             margin-right: 5px;
             transition: background-color 0.2s ease, transform 0.1s ease;
-            display: inline-block; /* 确保按钮在同一行 */
+            display: inline-block;
         }
         .action-buttons a:hover, .action-buttons button:hover {
             background-color: #5a6268;
             transform: translateY(-1px);
-        }
-        .action-buttons .delete-btn {
-            background-color: #dc3545;
-        }
-        .action-buttons .delete-btn:hover {
-            background-color: #c82333;
         }
         .action-buttons .edit-btn {
             background-color: #28a745;
@@ -259,7 +208,7 @@
             transform: translateY(-1px);
         }
         .editor-form textarea {
-            width: calc(100% - 22px); /* 减去padding和border */
+            width: calc(100% - 22px);
             height: 400px;
             margin-bottom: 15px;
             font-family: 'Cascadia Code', 'Consolas', 'Monaco', monospace;
@@ -275,7 +224,7 @@
         }
 
         .message-box {
-            display: none; /* 默认隐藏 */
+            display: none;
             position: fixed;
             top: 20px;
             left: 50%;
@@ -297,26 +246,25 @@
             to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
 
-        /* 响应式设计 */
         @media (max-width: 768px) {
             .container {
                 padding: 15px 20px;
             }
             table, th, td {
-                display: block; /* 在小屏幕上堆叠表格内容 */
+                display: block;
             }
             th {
-                text-align: right; /* 标题右对齐 */
+                text-align: right;
                 padding-bottom: 0;
             }
             td {
                 text-align: right;
                 border-bottom: none;
                 position: relative;
-                padding-left: 50%; /* 为伪元素留出空间 */
+                padding-left: 50%;
             }
             td::before {
-                content: attr(data-label); /* 使用data-label显示标题 */
+                content: attr(data-label);
                 position: absolute;
                 left: 0;
                 width: 45%;
@@ -335,7 +283,6 @@
         }
     </style>
     <script>
-        // 自定义消息框的JavaScript函数
         function showMessageBox(msg, type) {
             const msgBox = document.getElementById('messageBox');
             const msgText = document.getElementById('messageText');
@@ -344,33 +291,7 @@
             msgBox.style.display = 'block';
             setTimeout(() => {
                 msgBox.style.display = 'none';
-            }, 5000); // 5秒后自动隐藏
-        }
-
-        // 自定义确认删除对话框
-        function confirmDelete(displayName, targetPathEncoded, currentPathEncoded) {
-            const confirmBox = document.createElement('div');
-            confirmBox.className = 'message-box error'; // 使用error样式作为警告
-            confirmBox.style.display = 'block';
-            confirmBox.style.width = 'auto';
-            confirmBox.style.padding = '20px';
-            confirmBox.style.textAlign = 'center';
-            confirmBox.innerHTML = `
-                <p>确定要删除 "${displayName}" 吗？</p>
-                <button id="confirmDeleteBtn" style="background-color: #28a745; margin: 5px; padding: 10px 15px; border: none; border-radius: 6px; color: white; cursor: pointer;">确定</button>
-                <button id="cancelDeleteBtn" style="background-color: #6c757d; margin: 5px; padding: 10px 15px; border: none; border-radius: 6px; color: white; cursor: pointer;">取消</button>
-            `;
-            document.body.appendChild(confirmBox);
-
-            document.getElementById('confirmDeleteBtn').onclick = function() {
-                // Construct the URL for deletion, passing the current path and target file
-                window.location.href = `?action=delete&path=${currentPathEncoded}&target=${targetPathEncoded}`;
-                document.body.removeChild(confirmBox);
-            };
-
-            document.getElementById('cancelDeleteBtn').onclick = function() {
-                document.body.removeChild(confirmBox);
-            };
+            }, 5000);
         }
     </script>
 </head>
@@ -394,7 +315,6 @@
             </thead>
             <tbody>
                 <%
-                    // 返回上一级目录
                     String parentPath = new File(currentPath).getParent();
                     String currentPathRelativeEncoded = URLEncoder.encode(new File(application.getRealPath("/")).toURI().relativize(currentDirFile.toURI()).getPath(), "UTF-8");
                     if (parentPath != null) {
@@ -412,7 +332,6 @@
                 <%
                     for (File file : files) {
                         String fileName = file.getName();
-                        // Get the relative path of the file from the application root for URL encoding
                         String fileRelativePath = new File(application.getRealPath("/")).toURI().relativize(file.toURI()).getPath();
                         String filePathEncoded = URLEncoder.encode(fileRelativePath, "UTF-8");
 
@@ -446,7 +365,6 @@
                     <td data-label="操作" class="action-buttons">
                         <% if (file.isFile()) { %>
                             <%
-                                // 允许编辑的文件类型
                                 String[] editableExtensions = {".jsp", ".java", ".txt", ".html", ".xml", ".css", ".js", ".json", ".md"};
                                 boolean isEditable = false;
                                 for (String ext : editableExtensions) {
@@ -460,7 +378,6 @@
                                 <a href="?action=edit&path=<%= currentPathRelativeEncoded %>&target=<%= URLEncoder.encode(fileName, "UTF-8") %>" class="edit-btn">编辑</a>
                             <% } %>
                         <% } %>
-                        <button class="delete-btn" onclick="confirmDelete('<%= escapeJavaScript(fileName) %>', '<%= filePathEncoded %>', '<%= currentPathRelativeEncoded %>')">删除</button>
                     </td>
                 </tr>
                 <%
@@ -478,9 +395,7 @@
         </div>
 
         <%
-            // 文本编辑器部分
             if ("edit".equals(action) && target != null) {
-                // 防止路径遍历攻击
                 File fileToEdit = new File(currentPath, new File(target).getName());
                 if (fileToEdit.exists() && fileToEdit.isFile()) {
                     StringBuilder fileContent = new StringBuilder();
@@ -512,7 +427,6 @@
     </div>
 
     <script>
-        // 如果有消息，则显示
         <% if (!message.isEmpty()) { %>
             showMessageBox('<%= escapeJavaScript(message) %>', '<%= messageType %>');
         <% } %>
